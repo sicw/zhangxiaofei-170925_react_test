@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>05_components_composing</title>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/prop-types.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<script type="text/babel">
+
+    class App extends React.Component {
+
+        constructor(props) {
+            super(props);
+            // 初始化
+            this.state = {
+                todos: ['吃饭', '睡觉', '打豆豆']
+            }
+            this.addTodo = this.addTodo.bind(this)
+        }
+
+        addTodo(todo){
+            // 更新state
+            this.setState({
+                todos: [todo, ...this.state.todos]
+            })
+        }
+
+        render() {
+            const {todos} = this.state;
+            return (
+                <div>
+                    <h2>Simple TODO List</h2>
+                    <AddToDo count={todos.length} superState={this.state} addTodo={this.addTodo}/>
+                    <ToDoList todos={todos}/>
+                </div>
+            )
+        }
+    }
+
+    class AddToDo extends React.Component {
+
+        constructor(props) {
+            super(props);
+            this.addTodo = this.addTodo.bind(this)
+        }
+
+        addTodo(event){
+            // const todoValue = event.target.value;
+            const todoValue = this.todoInput.value;
+            // debugger;
+            // 通过父组件的回调函数, 修改父组件内state, 重新渲染展示页面.
+            this.props.addTodo(todoValue);
+        }
+
+        render() {
+            return (
+                <div>
+                    <input type="text" ref={input => this.todoInput = input} />
+                    <button onClick={this.addTodo} >Add #{this.props.count + 1}</button>
+                </div>
+            )
+        }
+    }
+    AddToDo.propTyps = {
+        count : PropTypes.number.isRequired,
+        // 没用, 子组件不能通过props修改父组件
+        superState : PropTypes.object,
+        addTodo: PropTypes.function
+    }
+
+    class ToDoList extends React.Component {
+
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            return (
+                <ul>
+                    {this.props.todos.map((todo, index) => <li key={index}>{todo}</li>)}
+                </ul>
+            )
+        }
+    }
+
+    ToDoList.propTypes = {
+        todos: PropTypes.array.isRequired
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('example'));
+</script>
+</body>
+</html>

@@ -33,14 +33,25 @@
         // 得到绑定在当前组件对象上的input的值
         alert(this.msgInput.value)
       }
+
+      <!-- 在input事件中获取 input标签本签 -->
       handleBlur (event) {
         alert(event.target.value)
       }
+
       render () {
         return (
           <div>
+            <!-- 绑定到了this对象中 不在refs中 this.msgInput -->
             <input type="text" ref={input => this.msgInput = input}/>{' '}
+
+            <!-- 绑定到了refs.xxx中 this.refs.xxx -->
+            <!-- <input type="text" ref="xxx"/>{' '} -->
+
+            <!-- 在button事件中获取input标签的value -->
             <button onClick={this.handleClick}>提示输入数据</button>{' '}
+
+            <!-- 在input事件中获取 input标签本签 -->
             <input type="text" placeholder="失去焦点提示数据" onBlur={this.handleBlur}/>
           </div>
         )

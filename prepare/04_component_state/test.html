@@ -30,6 +30,7 @@
       this.change = this.change.bind(this)
     }
 
+    // 在事件函数中更新状态
     change () {
       // 更新状态: this.setState()
       // this.state.isLikeMe = !this.state.isLikeMe // 不能更新更新某个状态
@@ -51,6 +52,7 @@
       // state变化时, 哪怕render中没有使用state
     // 重写组件内的方法, this就是指向Like的
     // 上面的changeXXX是新增的方法, 在触发时不是以Like为this.
+    // render中读取状态, 更新展示
     render () {
       console.log('state有更新啦render渲染更新DOM:',this);
       // const text = '没有使用state';

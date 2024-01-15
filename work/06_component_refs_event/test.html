@@ -32,7 +32,7 @@
 
       showInput () {
         const input = this.refs.content
-        //alert(input.value)
+        alert(input.value)
         alert(this.input.value)
       }
 
@@ -43,7 +43,9 @@
       render () {
         return (
           <div>
+            <!-- 绑定到this.refs.content上 -->
             <input type="text" ref="content"/>&nbsp;&nbsp;
+            <!-- 通过函数绑定到this.input上 -->
             <input type="text" ref={input => this.input = input }/>&nbsp;&nbsp;
             <button onClick={this.showInput}>提示输入</button>&nbsp;&nbsp;
             <input type="text" placeholder="失去焦点提示内容" onBlur={this.handleBlur}/>
